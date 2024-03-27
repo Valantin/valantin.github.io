@@ -1,0 +1,37 @@
+---
+layout: post
+title:  "Damn sasl!"
+date:   2024-03-27 17:08:27 +0100
+categories: puppet ldap sasl kerberos
+---
+I need to upgrade an old slapd configuration, so I've start to set it up with things I daily use.
+Puppet is so helpfull, if you know what you do, it simplify your day.
+I've constraint to not broke production things, in the past I've fail to set slapd tree when sasl
+was enabled, but I sucsessfull workaroud the problem in emergency mode.
+At that time I'd use checkcrc but not found the source code.
+
+simpler solution I've found but not tested [gist](https://gist.github.com/Shaltz/1d65a07a0901a36fb7f1?permalink_comment_id=4579943#gistcomment-4579943)
+{% highlight bash %}
+LDIF='/etc/openldap/slapd.d/cn=config.ldif'
+NEW_CRC32="$(tail -n +3 "$LDIF" | python3 -c 'import sys;import zlib;print("%08x"%(zlib.crc32(sys.stdin.buffer.read())))')"
+sed -i "0,/# CRC32 .*/ s//# CRC32 ${NEW_CRC32,,}/g" "$LDIF"
+{% endhighlight %}
+
+Now I've time and I'm motivated to complete the job in the right way.
+
+Just set correct security level and add `external` to sasl pwmech_list. So simple.
+
+First thing to remember sasl require privilege so you need to add ownership or add user to group.
+Every time I approcched sasl forgot this things and redo the same error, so this time I decide to
+make a module to setup things I probably forget the next time.
+
+I need 3 principal things, openldap set up for replica, saslauthd set up for use kerberos and 
+a kerberos pricipal with ldap/host@realm and host/host@realm
+
+I use puppet-openldap module to set up slapd for replica, but it miss to setup keytab path in debian
+default configuration for slapd, done upstream.
+
+For sasl I use an old module, so I decide to create a new module, more time but I hope community
+can better support it and help mi to maintain in the time.
+
+Some thing for krb5.conf, I start to setup a module just to configure the client part, for now.
