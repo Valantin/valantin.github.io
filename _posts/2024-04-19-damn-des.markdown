@@ -1,0 +1,15 @@
+---
+layout: post
+title:  "Damn DES!"
+date:   2024-04-19 13:04:27 +0100
+categories: kerberos password
+---
+I need to upgrade and old kerberos infrastructure.
+No one know the master key, I've foud an old rant of people in the same situation,  14 year ago.
+Thanks to it [rant](https://systemrants.benshoshan.com/2010/08/recover-master-password-in-mit-kerberos.html?m=1) I've set up a test infrastructure and dump e move the db with different password.
+So it's time to try to import production db, it miserable fails, single DES was completly removed from kerberos and I can't create the mkey with des-cbc-crc anymore.
+My kerberos version was older then the one in the article and miss some features, so I can't create a new mkey with a different encryption, or I can't in the manner I know.
+
+Thanks to Debian 10 I've installed a kerberos 1.17 and successfull followed the procedure to change the password.
+
+Now it's time to start buildind the new production infrastructure.
