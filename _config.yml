@@ -4,9 +4,8 @@ description: 'Spare parts of my mind, talking about things I do (or fail).'
 tagline: 'di Roberto Valentini'
 paginate: 5
 paginate_path: '/page/:num'
-baseurl: '/'
 url: https://valantin.github.io
-permalink: '/:year/:month/:title/'
+permalink: '/blog/:year-:month-:day_:title'
 excerpt_separator: ''
 license:
   link: 'https://creativecommons.org/licenses/by-nc/3.0/'
@@ -15,8 +14,8 @@ author:
   name: Roberto Valentini
   url: https://valantin.github.io
   email: valantin89@gmail.com
-twitter_username: valantin89
-github_username:  Valantin
+  twitter: valantin89
+  github:  Valantin
 
 # Build settings
 plugins:
