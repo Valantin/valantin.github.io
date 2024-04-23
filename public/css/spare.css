@@ -1,0 +1,13 @@
+  /*
+   * footer
+   */
+   
+  .sidebar-footer {
+    font-family: "PT Sans", Helvetica, Arial, sans-serif;
+    text-align: center;
+    max-width: 38rem;
+    padding-left:  1rem;
+    padding-right: 1rem;
+    margin-left:  auto;
+    margin-right: auto;
+  }
